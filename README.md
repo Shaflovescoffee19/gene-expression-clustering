@@ -30,7 +30,7 @@ The simulation is intentionally realistic: counts follow a negative binomial dis
 Raw RNA-Seq counts are highly right-skewed, a few highly expressed genes dominate. `log1p` (log(x+1)) transformation compresses the range and produces a more symmetric distribution suitable for distance-based algorithms. The +1 prevents log(0) = undefined for zero-count genes.
 
 ### 2. Variance-Based Feature Selection
-Of 500 genes, only the 100 with highest variance across samples are retained. Low-variance genes are expressed similarly in all patients regardless of subtype — they add noise without signal. High-variance genes are the ones that discriminate between subtypes.
+Of 500 genes, only the 100 with highest variance across samples are retained. Low-variance genes are expressed similarly in all patients regardless of subtype, they add noise without signal. High-variance genes are the ones that discriminate between subtypes.
 
 ### 3. Standardisation + PCA
 StandardScaler normalises each gene to mean 0, std 1. PCA then reduces 100 genes to the minimum components explaining 80% of total variance, removing remaining noise while preserving the structure needed for clustering.
@@ -123,7 +123,7 @@ python3 gene_expression_clustering.py
 
 ## 🗺️ Learning Roadmap
 
-_**Project 6 of 10**_ — a structured series building from data exploration through to advanced ML techniques.
+_**Project 6 of 10**_ -> a structured series building from data exploration through to advanced ML techniques.
 
 | # | Project | Focus |
 |---|---------|-------|
