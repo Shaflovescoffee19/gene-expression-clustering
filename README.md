@@ -1,6 +1,6 @@
-# 🧬 Gene Expression Clustering — Cancer Subtype Discovery
+# 🧬 Gene Expression Clustering -> Cancer Subtype Discovery
 
-Gene expression data brings unique challenges that standard tabular ML datasets do not — thousands of features per sample, severe right-skew, and the need to find biologically meaningful structure rather than just mathematical clusters. This project builds the complete preprocessing and clustering pipeline used in real genomics research, from raw count normalisation through to the clustered heatmap that has become one of the most recognisable visualisations in molecular biology.
+Gene expression data brings unique challenges that standard tabular ML datasets do not, thousands of features per sample, severe right-skew, and the need to find biologically meaningful structure rather than just mathematical clusters. This project builds the complete preprocessing and clustering pipeline used in real genomics research, from raw count normalisation through to the clustered heatmap that has become one of the most recognisable visualisations in molecular biology.
 
 ---
 
@@ -18,7 +18,7 @@ Gene expression data brings unique challenges that standard tabular ML datasets 
 
 ## 🗂️ The Data
 
-Real RNA-Seq data consists of per-gene read counts measuring how actively each gene is being transcribed in a cell. The output is a matrix where rows are samples, columns are genes, and values are expression levels. This project simulates a realistic RNA-Seq matrix with three cancer subtypes, each defined by a distinct set of upregulated genes — mimicking the biological reality that different cancer subtypes activate different molecular pathways.
+Real RNA-Seq data consists of per-gene read counts measuring how actively each gene is being transcribed in a cell. The output is a matrix where rows are samples, columns are genes, and values are expression levels. This project simulates a realistic RNA-Seq matrix with three cancer subtypes, each defined by a distinct set of upregulated genes, mimicking the biological reality that different cancer subtypes activate different molecular pathways.
 
 The simulation is intentionally realistic: counts follow a negative binomial distribution (as in real RNA-Seq), subtype signal is added to specific gene sets, and biological noise is present throughout.
 
@@ -27,20 +27,20 @@ The simulation is intentionally realistic: counts follow a negative binomial dis
 ## 🔧 Preprocessing Pipeline
 
 ### 1. Log Transformation
-Raw RNA-Seq counts are highly right-skewed — a few highly expressed genes dominate. `log1p` (log(x+1)) transformation compresses the range and produces a more symmetric distribution suitable for distance-based algorithms. The +1 prevents log(0) = undefined for zero-count genes.
+Raw RNA-Seq counts are highly right-skewed, a few highly expressed genes dominate. `log1p` (log(x+1)) transformation compresses the range and produces a more symmetric distribution suitable for distance-based algorithms. The +1 prevents log(0) = undefined for zero-count genes.
 
 ### 2. Variance-Based Feature Selection
 Of 500 genes, only the 100 with highest variance across samples are retained. Low-variance genes are expressed similarly in all patients regardless of subtype — they add noise without signal. High-variance genes are the ones that discriminate between subtypes.
 
 ### 3. Standardisation + PCA
-StandardScaler normalises each gene to mean 0, std 1. PCA then reduces 100 genes to the minimum components explaining 80% of total variance — removing remaining noise while preserving the structure needed for clustering.
+StandardScaler normalises each gene to mean 0, std 1. PCA then reduces 100 genes to the minimum components explaining 80% of total variance, removing remaining noise while preserving the structure needed for clustering.
 
 ---
 
 ## 🤖 Methods
 
 ### Hierarchical Clustering (Ward Linkage)
-Bottom-up tree construction — starts with every patient as its own cluster, merges the most similar pair repeatedly. Ward linkage minimises within-cluster variance at each merge, producing compact clusters of roughly equal size. No K needs to be specified upfront — the dendrogram shows the full merge history and the natural cut point emerges from the data.
+Bottom-up tree construction, starts with every patient as its own cluster, merges the most similar pair repeatedly. Ward linkage minimises within-cluster variance at each merge, producing compact clusters of roughly equal size. No K needs to be specified upfront, the dendrogram shows the full merge history and the natural cut point emerges from the data.
 
 ### K-Means Comparison
 K-Means trained with K=3 on the same PCA-reduced features, for direct comparison against hierarchical clustering on the same evaluation metrics.
@@ -52,7 +52,7 @@ K-Means trained with K=3 on the same PCA-reduced features, for direct comparison
 | K-Means (K=3) | *see output* | *see output* |
 
 ### Differential Expression Analysis
-For each discovered cluster, genes are ranked by mean expression difference versus all other clusters. The top-ranking genes per cluster are the "marker genes" — the molecular signatures that define each subtype.
+For each discovered cluster, genes are ranked by mean expression difference versus all other clusters. The top-ranking genes per cluster are the "marker genes" -> the molecular signatures that define each subtype.
 
 ---
 
@@ -73,7 +73,7 @@ For each discovered cluster, genes are ranked by mean expression difference vers
 
 ## 🔍 Key Findings
 
-PCA separates the three subtypes clearly in 2D — PC1 vs PC2 shows well-defined clusters with minimal overlap, confirming that the subtype signal is strong relative to noise. The hierarchical clustering dendrogram shows a natural three-way split at a clear height threshold. The clustered heatmap shows distinct expression blocks per subtype — the red (high expression) and blue (low expression) blocks are biologically interpretable as pathway activations specific to each subtype.
+PCA separates the three subtypes clearly in 2D -> PC1 vs PC2 shows well-defined clusters with minimal overlap, confirming that the subtype signal is strong relative to noise. The hierarchical clustering dendrogram shows a natural three-way split at a clear height threshold. The clustered heatmap shows distinct expression blocks per subtype, the red (high expression) and blue (low expression) blocks are biologically interpretable as pathway activations specific to each subtype.
 
 The marker gene analysis correctly recovers the simulated subtype-defining genes, validating that the pipeline finds genuine signal rather than artefactual clusters.
 
@@ -111,19 +111,19 @@ python3 gene_expression_clustering.py
 ## 📚 Skills Developed
 
 - Understanding RNA-Seq data structure and why it requires specialised preprocessing
-- Log transformation for right-skewed count data — intuition and implementation
+- Log transformation for right-skewed count data -> intuition and implementation
 - Variance-based feature selection for high-dimensional genomic data
-- Hierarchical clustering with Ward linkage — algorithm, dendrogram reading, cut point selection
-- The difference between hierarchical and K-Means clustering — when to use each
+- Hierarchical clustering with Ward linkage -> algorithm, dendrogram reading, cut point selection
+- The difference between hierarchical and K-Means clustering -> when to use each
 - Clustered heatmap construction and biological interpretation
-- Differential expression analysis — identifying marker genes per cluster
+- Differential expression analysis - identifying marker genes per cluster
 - Davies-Bouldin Index as a complement to Silhouette Score for cluster evaluation
 
 ---
 
 ## 🗺️ Learning Roadmap
 
-**Project 6 of 10** — a structured series building from data exploration through to advanced ML techniques.
+_**Project 6 of 10**_ — a structured series building from data exploration through to advanced ML techniques.
 
 | # | Project | Focus |
 |---|---------|-------|
